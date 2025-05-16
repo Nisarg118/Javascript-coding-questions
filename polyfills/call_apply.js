@@ -13,4 +13,12 @@ Function.prototype.myCall = function (obj, ...args) {
   return ans;
 };
 
+Function.prototype.myApply = function (obj, args) {
+  obj.fn = this;
+  const ans = obj.fn(...args);
+  delete obj.fn;
+  return ans;
+};
+
 console.log(fun.myCall(person, "this", "is"));
+console.log(fun.myApply(person, ["this", "is"]));
