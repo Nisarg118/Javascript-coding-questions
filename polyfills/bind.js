@@ -7,7 +7,7 @@ Function.prototype.myBind = function (thisArg, ...args) {
   return function (...bindArgs) {
     const key = Symbol();
     context[key] = fn;
-    const ans = context[key](...args, ...bindArgs);
+    const ans = context.key(...args, ...bindArgs);
     delete context[key];
     return ans;
   };
