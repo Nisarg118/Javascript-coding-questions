@@ -1,9 +1,11 @@
-function debounce(fn, wait) {
-  let timeId;
-  return function (...args) {
-    clearTimeout(timeId);
-    timeId = setTimeout(() => fn.call(...args), wait);
-  };
-}
+const obj = {
+  name: "Silver Surfer",
+  outer() {
+    const inner = () => {
+      console.log("inner this:", this); // arrow functions inherit `this`
+    };
+    inner();
+  },
+};
 
-
+obj.outer();
