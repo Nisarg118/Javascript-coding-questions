@@ -1,21 +1,20 @@
-(function (w) {
-  const timeoutIds = [];
-  const originalTimeoutFn = window.setTimeout;
+const timeoutIds = [];
+const originalTimeoutFn = window.setTimeout;
 
-  w.setTimeout = function setTimeout(fn, delay) {
-    const id = originalTimeoutFn(fn, delay);
+window.setTimeout = function setTimeout(fn, delay) {
+  const id = originalTimeoutFn(fn, delay);
 
-    timeoutIds.push(id);
+  timeoutIds.push(id);
 
-    return id;
-  };
+  return id;
+};
 
-  w.clearAllTimeout = function clearAllTimeout() {
-    while (timeoutIds.length) {
-      clearTimeout(timeoutIds.pop());
-    }
-  };
-})(window);
+function clearAllTimeout() {
+  while (timeoutIds.length) {
+    clearTimeout(timeoutIds.pop());
+  }
+}
+
 setTimeout(() => {
   console.log("One");
 }, 1000);
