@@ -1,29 +1,49 @@
-function deepClone(obj) {
-  if (obj === null) return null;
-  if (Array.isArray(obj)) {
-    return obj.map((item) => deepClone(item));
-  }
-  if (typeof obj === "object") {
-    let ans = {};
-    for (let key in obj) {
-      ans[key] = deepClone(obj[key]);
-    }
-    return ans;
-  }
-  return obj;
-}
+// Q:Implement a function deepClone that performs a deep copy of an object, including arrays and nested objects — but assume no circular references yet.
 
-const original = {
-  name: "Alice",
-  age: 30,
-  hobbies: ["reading", "gaming"],
-  address: { city: "Delhi", zip: 123456 },
+// const obj = {
+//   name: "Nisarg",
+//   details: {
+//     age: 24,
+//     skills: ["JS", "Node", { name: "MongoDB" }],
+//   },
+// };
+
+// const clone = deepClone(obj);
+
+// console.log(clone);
+// console.log(clone === obj); // false
+// console.log(clone.details === obj.details); // false
+// console.log(clone.details.skills === obj.details.skills); // false
+// console.log(clone.details.skills[2] === obj.details.skills[2]); // false
+
+const obj = {
+  name: "Nisarg",
+  details: {
+    age: 24,
+    skills: ["JS", "Node", { name: "MongoDB" }],
+  },
 };
 
-const clone = deepClone(original);
+const clone = deepClone(obj);
 
-// Test cases:
-console.log(clone); // same content
-console.log(clone === original); // false ✅
-console.log(clone.address === original.address); // false ✅
-console.log(clone.hobbies === original.hobbies); // false ✅
+console.log(clone);
+console.log(clone === obj); // false
+console.log(clone.details === obj.details); // false
+console.log(clone.details.skills === obj.details.skills); // false
+console.log(clone.details.skills[2] === obj.details.skills[2]); // false
+
+function deepClone(obj) {
+  if (obj === null || typeof obj !== "object") {
+    return obj;
+  }
+  let ans = {};
+
+  if (Array.isArray(obj)) {
+    return obj.map((element) => deepClone(element));
+  }
+
+  for (let key in obj) {
+    ans[key] = deepClone(obj[key]);
+  }
+  return ans;
+}
