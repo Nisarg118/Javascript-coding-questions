@@ -33,7 +33,7 @@ function deepFreeze(obj) {
     ) {
       deepFreeze(obj[key]);
     }
-  }
+  } 
 }
 
 const data = {
