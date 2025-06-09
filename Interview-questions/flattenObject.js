@@ -1,47 +1,31 @@
-// Q1: Object Flattening
+const input = {
+  name: "Alice",
+  address: {
+    city: "Wonderland",
+    zip: {
+      code: 12345,
+      plus4: [1, 2, 3, { greeting: "Hello" }],
+    },
+  },
+};
 
-// Write a function flattenObject(obj) that takes a nested object and returns a new object with flattened keys using dot notation.
+function flattenObject(obj, parentKey = "") {
+  let ans = {};
 
-// const input = {
-//   a: 1,
-//   b: {
-//     c: 2,
-//     d: {
-//       e: 3,
-//     },
-//   },
-// };
-
-// Output:
-// { 'a': 1, 'b.c': 2, 'b.d.e': 3 }
-
-function flattenObject(obj, parentkey = "", ans = {}) {
   for (let key in obj) {
-    if (!obj.hasOwnProperty(key)) continue;
+    let value = obj[key];
 
-    const newKey = parentkey ? `${parentkey}.${key}` : key;
+    let newKey = parentKey ? `${parentKey}.${key}` : key;
 
-    if (
-      typeof obj[key] === "object" &&
-      !Array.isArray(obj[key]) &&
-      obj[key] !== null
-    ) {
-      flattenObject(obj[key], newKey, ans);
+    if (value !== null && typeof value === "object") {
+      const returnedObject = flattenObject(value, newKey);
+      Object.assign(ans, returnedObject);
     } else {
-      ans[newKey] = obj[key];
+      ans[newKey] = value;
     }
   }
 
   return ans;
 }
-const input = {
-  a: 1,
-  b: {
-    c: 2,
-    d: {
-      e: 3,
-    },
-  },
-};
 
 console.log(flattenObject(input));
